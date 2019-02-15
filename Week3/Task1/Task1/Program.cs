@@ -3,16 +3,20 @@ using System.IO;
 
 namespace Task1
 {
+    //создаю класс для farmanager
     class FarManager
     {
+        //переменные для работы с курсором, скрытыми файлами
         public int cursor;
         public bool ok;
         public int sz;
+        //конструктоп с заданными переменными
         public FarManager()
         {
             cursor = 0;
             ok = true;
         }
+        //функции для перемещения курсора
         public void Up()
         {
             cursor--;
@@ -25,6 +29,7 @@ namespace Task1
             if (cursor == sz)
                 cursor = 0;
         }
+        // функция для окрашивания курсора, папок и файлов
         public void Color(FileSystemInfo fs, int index)
         {
             if (index == cursor)
@@ -43,6 +48,7 @@ namespace Task1
                 Console.ForegroundColor = ConsoleColor.Green;
             }
         }
+        //функция для вывода содержимого директории на экран
         public void show(string path)
         {
             DirectoryInfo di = new DirectoryInfo(path);
@@ -61,17 +67,20 @@ namespace Task1
                 index++;
             }
         }
+        // функция для запуска farmanager
         public void Start(string path)
         {
             DirectoryInfo di = new DirectoryInfo(path);
-            ConsoleKeyInfo consoleKey = Console.ReadKey();
             FileSystemInfo fs = null;
+            //бесконечный цикл: ожидает нажатия какой нибудь кнопки
             while(true)
             {
+                // выводит на экран содержимое
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.Clear();
                 show(path);
-                consoleKey = Console.ReadKey();
+                ConsoleKeyInfo consoleKey = Console.ReadKey();
+                // привязка определенных функций к кнопкам
                 if (consoleKey.Key == ConsoleKey.UpArrow)
                     Up();
                 if (consoleKey.Key == ConsoleKey.DownArrow)
@@ -115,9 +124,9 @@ namespace Task1
     {
         static void Main(string[] args)
         {
+            // объявление класса и вызов функции
             FarManager farmanager = new FarManager();
             farmanager.Start("/PP2/");
-            Console.ReadKey();
         }
     }
 }
