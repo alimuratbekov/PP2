@@ -52,18 +52,25 @@ namespace Task1
         public void show(string path)
         {
             DirectoryInfo di = new DirectoryInfo(path);
-            FileSystemInfo[] fileSystemInfos = di.GetFileSystemInfos();
-            sz = fileSystemInfos.Length;
+            FileInfo[] fileSystemInfos = di.GetFiles();
+            DirectoryInfo[] dis = di.GetDirectories();
+            sz = fileSystemInfos.Length + dis.Length;
             int index = 0;
-            foreach (FileSystemInfo fs in fileSystemInfos)
+            foreach (DirectoryInfo d in dis)
             {
-                if (ok && fs.Name.StartsWith("."))
+                if (ok && d.Name.StartsWith("."))
                 {
                     sz--;
                     continue;
                 }
-                Color(fs, index);
-                Console.WriteLine(index+1 + ". " + fs.Name);
+                Color(d, index);
+                Console.WriteLine(d.Name);
+                index++;
+            }
+            foreach (FileInfo f in fileSystemInfos)
+            {
+                Color(f, index);
+                Console.WriteLine(f.Name);
                 index++;
             }
         }
@@ -116,6 +123,20 @@ namespace Task1
                         di = new DirectoryInfo(fs.FullName);
                         path = fs.FullName;
                     }
+                    
+                }
+                if (consoleKey.Key == ConsoleKey.Backspace)
+                {
+                    int k = 0;
+                    for (int i=0;i<di.GetFileSystemInfos().Length;i++)
+                    {
+                        if (cursor==k)
+                        {
+                            di.GetFileSystemInfos()[i].Delete();
+                            break;
+                        }
+                        k++;
+                    }
                 }
             }
         }
@@ -126,7 +147,7 @@ namespace Task1
         {
             // объявление класса и вызов функции
             FarManager farmanager = new FarManager();
-            farmanager.Start("/PP2/");
+            farmanager.Start("/Users/aliko/Desktop/MINDKILLERS");
         }
     }
 }

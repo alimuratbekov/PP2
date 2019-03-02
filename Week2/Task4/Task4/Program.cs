@@ -7,14 +7,16 @@ namespace Task4
     {
         static void Main(string[] args)
         {
-            //Объявляю переменную, которой присвоен путь до файла
-            string path = "/Users/aliko/desktop/MINDKILLERS/File.txt";
-            string path1 = "/Users/aliko/desktop";
-            FileInfo fi = new FileInfo(path);
+            //Объявляю переменные, которыми присвоены пути (откуда и куда)
+            string path = "/Users/aliko/desktop/MINDKILLERS";
+            string path1 = "/Users/aliko/desktop/file.txt";
+            path = Path.Combine(path, "file.txt");
+            FileStream fi = File.Create(@"/Users/aliko/desktop/MINDKILLERS/file.txt");
+            fi.Close();
             //копирую из path в path1
-            fi.CopyTo(path1 + "/Copy.txt",true);
+            File.Copy(path,path1,true);
             //удаляю в path
-            fi.Delete();
+            File.Delete(path);
         }
     }
 }
