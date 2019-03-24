@@ -7,26 +7,13 @@ namespace Snake
     class Food:GameObject
     {
         public Food(int x, int y, char sign, ConsoleColor color):base(x, y, sign, color) { }
-        public void Generate(Snake snake, Wall wall)
+        public void Generate()
         {
-            bool ok = true;
-            while (ok)
-            {
-                Random random = new Random();
-                body[0].x = random.Next(1, Console.WindowWidth);
-                body[0].y = random.Next(1, Console.WindowHeight);
-                ok = false;
-                foreach (Point p in snake.body)
-                {
-                    if (p.x == body[0].x && p.y == body[0].y)
-                        ok = true;
-                }
-                foreach (Point p in wall.body)
-                {
-                    if (p.x == body[0].x && p.y == body[0].y)
-                        ok = true;
-                }
-            }
+            Random random = new Random();
+            int x = random.Next(1, Console.WindowWidth);
+            int y = random.Next(1, Console.WindowHeight);
+            body[0].x = x;
+            body[0].y = y;
         }
     }
 }

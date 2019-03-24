@@ -1,63 +1,92 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Snake
 {
     class Game
     {
+        public bool isAlive;
+        public string username;
+        public int score = 0;
+
+        List<GameObject> g_objects;
+
         public Snake snake;
         public Food food;
         public Wall wall;
 
-        bool isAlive;
-        List<GameObject> g_objects;
-
         public Game()
         {
-            isAlive = true;
-            snake = new Snake(10, 10, 'O', ConsoleColor.Yellow);
-
-            food = new Food(0 , 0, 'o', ConsoleColor.Cyan);
-            food.Generate(snake, wall);
-
-            wall = new Wall('#', ConsoleColor.Green);
-            wall.LoadLevel();
-
             g_objects = new List<GameObject>();
+
+            isAlive = true;
+
+            snake = new Snake(10, 10, 'o', ConsoleColor.Blue);
+
+            food = new Food(0, 0, 'O', ConsoleColor.Green);
+            food.Generate();
+
+            wall = new Wall('#', ConsoleColor.Red);
+            wall.Walls();
+
+            while (food.IsCollisionWithObject(snake) || food.IsCollisionWithObject(wall))
+                food.Generate();
+
             g_objects.Add(snake);
             g_objects.Add(food);
+            g_objects.Add(wall);
 
             Console.CursorVisible = false;
         }
         public void Start()
         {
+            Console.Write("Username: ");
+            username = Console.ReadLine();
+            Console.WriteLine("Press any button to start.");
+
             ConsoleKeyInfo consoleKey = Console.ReadKey();
-            while (consoleKey.Key != ConsoleKey.Escape && isAlive)
+
+            Thread thread = new Thread(MoveSnake);
+            thread.Start();
+
+            while (isAlive && consoleKey.Key != ConsoleKey.Escape)
             {
-                snake.Move(consoleKey);
-                Draw();
                 consoleKey = Console.ReadKey();
-                if (snake.isCollisionWithFood(food))
+                snake.ChangeDirection(consoleKey);
+            }
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.SetCursorPosition(40, 10);
+            Console.WriteLine("GAME OVER! " + username + ", your score is: " + score);
+            Console.ReadKey();
+        }
+
+        public void MoveSnake()
+        {
+            while (isAlive)
+            {
+                snake.Move();
+                if (snake.IsCollisionWithObject(food))
                 {
+                    score += 10;
+                    while (food.IsCollisionWithObject(snake) || food.IsCollisionWithObject(wall))
+                        food.Generate();
                     snake.body.Add(new Point(0, 0));
-                    food.Generate(snake, wall);
-                    
                 }
-                if (snake.isCollisionWithWall(wall))
+                if (snake.IsCollisionWithObject(wall))
                 {
+                    Console.Write("Press any button.");
                     isAlive = false;
                 }
-                if (snake.isCollisionWithSnake())
-                {
+                if (snake.IsCollisionWithItself())
                     isAlive = false;
-                }
-                Console.Clear();
-                Console.SetCursorPosition(10, 10);
-                Console.Write("GAME OVER");
-                Console.ReadKey();
+                Draw();
+                Thread.Sleep(100);
             }
         }
+
         public void Draw()
         {
             Console.Clear();

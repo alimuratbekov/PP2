@@ -7,37 +7,24 @@ namespace Snake
 {
     class Wall:GameObject
     {
-        enum GameLevel
-        {
-            First
-        }
-        GameLevel gamelevel = GameLevel.First;
-        public Wall(char sign, ConsoleColor color):base(0 ,0, sign, color)
+        public Wall(char sign, ConsoleColor color) : base(0, 0, sign, color)
         {
             body = new List<Point>();
         }
-        public void Walls(string filename)
+        public void Walls()
         {
+            body = new List<Point>();
+            string filename = "walls.txt";
             StreamReader sr = new StreamReader(filename);
-            string s = "";
-            int y = 0;
-            while ((s = sr.ReadLine()) != null)
-            {
-                for (int x = 0;x<s.Length;x++)
+            string[] rows = sr.ReadToEnd().Split('\n');
+            for (int i = 0; i < rows.Length; i++)
+            
+                for (int j = 0; j < rows[i].Length; j++)
                 {
-                    if (s[x] == '#') body.Add(new Point(x, y));
+                    if (rows[i][j] == '#')
+                        body.Add(new Point(j, i));
                 }
-                y++;
-            }
-            sr.Close();
-        }
-        public void LoadLevel()
-        {
-            body = new List<Point>();
-            if (gamelevel == GameLevel.First)
-            {
-                Walls("walls.txt");
-            }
+            
         }
     }
 }
