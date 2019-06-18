@@ -15,7 +15,7 @@ namespace Snake
             LEFT
         }
         Direction direction = Direction.NONE;
-        public Snake(int x, int y, char sign, ConsoleColor color):base(x, y, sign, color) { }
+        public Snake(int x, int y, string sign, ConsoleColor color):base(x, y, sign, color) { }
 
         public void Move()
         {
@@ -24,6 +24,11 @@ namespace Snake
 
             for (int i = body.Count - 1; i > 0; i--)
             {
+                if (i == body.Count - 1)
+                {
+                    Console.SetCursorPosition(body[i].x, body[i].y);
+                    Console.Write(" ");
+                }
                 body[i].x = body[i - 1].x;
                 body[i].y = body[i - 1].y;
             }
@@ -36,13 +41,13 @@ namespace Snake
 
         public void ChangeDirection(ConsoleKeyInfo consoleKey)
         {
-            if (consoleKey.Key == ConsoleKey.UpArrow)
+            if (consoleKey.Key == ConsoleKey.UpArrow && direction !=Direction.DOWN)
                 direction = Direction.UP;
-            if (consoleKey.Key == ConsoleKey.DownArrow)
+            if (consoleKey.Key == ConsoleKey.DownArrow && direction != Direction.UP)
                 direction = Direction.DOWN;
-            if (consoleKey.Key == ConsoleKey.LeftArrow)
+            if (consoleKey.Key == ConsoleKey.LeftArrow && direction != Direction.RIGHT)
                 direction = Direction.LEFT;
-            if (consoleKey.Key == ConsoleKey.RightArrow)
+            if (consoleKey.Key == ConsoleKey.RightArrow && direction != Direction.LEFT)
                 direction = Direction.RIGHT;
         }
 

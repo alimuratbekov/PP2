@@ -7,9 +7,9 @@ namespace Snake
     class GameObject
     {
         public List<Point> body;
-        public char sign;
+        public string sign;
         public ConsoleColor color;
-        public GameObject(int x, int y, char sign, ConsoleColor color)
+        public GameObject(int x, int y, string sign, ConsoleColor color)
         {
             body = new List<Point>
             {
