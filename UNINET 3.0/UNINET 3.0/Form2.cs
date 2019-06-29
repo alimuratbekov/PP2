@@ -12,6 +12,8 @@ namespace UNINET_3._0
 {
     public partial class Form2 : Form
     {
+        Form1 form1 = new Form1();
+
 
         public Form2()
         {
@@ -22,9 +24,9 @@ namespace UNINET_3._0
         {
             int x;
             string s = (sender as TextBox).Text;
-            if (!Int32.TryParse(s, out x))
+            if (!Int32.TryParse(s, out x) && (sender as TextBox).Text != "")
                 MessageBox.Show("Можно вводить только числа!");
-            if (x > 4 || x < 1)
+            if ((x > 4 || x < 1) && (sender as TextBox).Text != "")
                 MessageBox.Show("Недопустимое количество кредитов");
         }
 
@@ -33,7 +35,7 @@ namespace UNINET_3._0
 
             int x;
             string s = (sender as TextBox).Text;
-            if (!Int32.TryParse(s, out x))
+            if (!Int32.TryParse(s, out x) && (sender as TextBox).Text != "")
                 MessageBox.Show("Можно вводить только числа!");
             if (x > 15)
                 MessageBox.Show("Максимум 15 баллов за куиз!");
@@ -43,10 +45,15 @@ namespace UNINET_3._0
         {
             int x;
             string s = (sender as TextBox).Text;
-            if (!Int32.TryParse(s, out x))
+            if (!Int32.TryParse(s, out x) && (sender as TextBox).Text != "")
                 MessageBox.Show("Можно вводить только числа!");
             if (x > 40)
                 MessageBox.Show("Максимум 40 баллов за файнал");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

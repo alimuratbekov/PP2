@@ -25,7 +25,7 @@ namespace UNINET_3._0
 
         int it = 1;
 
-        string q1, q2, q3, q4, final;
+        int att, final;
 
         public Form1()
         {
@@ -53,6 +53,9 @@ namespace UNINET_3._0
             foreach (var dis in dis_s1)
             {
                 dis_s.Add(dis);
+
+                att = 0;
+                final = 0;
 
                 posX = 120;
                 posY += 40;
@@ -99,23 +102,48 @@ namespace UNINET_3._0
                     Controls.Add(textBox);
                     if (textBox.Name == "textBox1")
                     {
+                        if (dis.q1 == "")
+                            dis.q1 = "0";
                         textBox.Text = dis.q1;
                     }
                     else if (textBox.Name == "textBox2")
                     {
+                        if (dis.q2 == "")
+                            dis.q2 = "0";
                         textBox.Text = dis.q2;
                     }
                     else if (textBox.Name == "textBox3")
                     {
+                        if (dis.q3 == "")
+                            dis.q3 = "0";
                         textBox.Text = dis.q3;
                     }
                     else if (textBox.Name == "textBox4")
                     {
+                        if (dis.q4 == "")
+                            dis.q4 = "0";
                         textBox.Text = dis.q4;
                     }
                     else if (textBox.Name == "textBox5")
                     {
+                        if (dis.fin == "")
+                            dis.fin = "0";
                         textBox.Text = dis.fin;
+                    }
+                    if (i != 4)
+                    {
+                        try
+                        {
+                            att += Convert.ToInt32(textBox.Text);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Неверный формат значений!");
+                        }
+                    }
+                    else
+                    {
+                        final = Convert.ToInt32(textBox.Text);
                     }
                 }
 
@@ -145,6 +173,21 @@ namespace UNINET_3._0
                 btn.Click += btn_Clicked;
                 Controls.Add(btn);
 
+                Label attres = new Label();
+                attres.Location = new Point(posX + 7 * lbszX / 4, posY);
+                attres.Size = new Size(lbszX / 2, lbszY);
+                attres.Font = new Font(button1.Font.Name, button1.Font.Size, button1.Font.Style);
+                attres.ForeColor = Color.Chocolate;
+                attres.Text = att.ToString() + " / 60";
+                Controls.Add(attres);
+
+                Label finres = new Label();
+                finres.Location = new Point(posX + 5 * lbszX / 2, posY);
+                finres.Size = new Size(lbszX / 2, lbszY);
+                finres.Font = new Font(button1.Font.Name, button1.Font.Size, button1.Font.Style);
+                finres.ForeColor = Color.Chocolate;
+                finres.Text = final.ToString() + " / 40";
+                Controls.Add(finres);
             }
             fs1.Close();
 
@@ -176,6 +219,9 @@ namespace UNINET_3._0
             posX = 120;
             posY += 40;
             Discipline dis = new Discipline();
+
+            att = 0;
+            final = 0;
 
             Form2 form2 = new Form2();
 
@@ -248,26 +294,49 @@ namespace UNINET_3._0
 
                 if (textBox.Name == "textBox1")
                 {
+                    if (dis.q1 == "")
+                        dis.q1 = "0";
                     textBox.Text = dis.q1;
                 }
                 else if (textBox.Name == "textBox2")
                 {
+                    if (dis.q2 == "")
+                        dis.q2 = "0";
                     textBox.Text = dis.q2;
                 }
                 else if (textBox.Name == "textBox3")
                 {
+                    if (dis.q3 == "")
+                        dis.q3 = "0";
                     textBox.Text = dis.q3;
                 }
                 else if (textBox.Name == "textBox4")
                 {
+                    if (dis.q4 == "")
+                        dis.q4 = "0";
                     textBox.Text = dis.q4;
                 }
                 else if (textBox.Name == "textBox5")
                 {
+                    if (dis.fin == "")
+                        dis.fin = "0";
                     textBox.Text = dis.fin;
                 }
 
-                Controls.Add(textBox);              
+                Controls.Add(textBox);
+
+                if (i != 4)
+                {
+                    try
+                    {
+                        att += Convert.ToInt32(textBox.Text);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Неверный формат значений!");
+                    }
+                }
+
             }
 
             if (dis_s.Count == 1)
@@ -298,6 +367,22 @@ namespace UNINET_3._0
             btn.Text = "Delete";
             btn.Click += btn_Clicked;
             Controls.Add(btn);
+
+            Label attres = new Label();
+            attres.Location = new Point(posX + 2 * lbszX, posY);
+            attres.Size = new Size(lbszX, lbszY);
+            attres.Font = new Font(button1.Font.Name, button1.Font.Size, button1.Font.Style);
+            attres.ForeColor = Color.Chocolate;
+            attres.Text = att.ToString() + " / 60";
+            Controls.Add(attres);
+
+            Label finres = new Label();
+            finres.Location = new Point(posX + 3 * lbszX, posY);
+            finres.Size = new Size(lbszX, lbszY);
+            finres.Font = new Font(button1.Font.Name, button1.Font.Size, button1.Font.Style);
+            finres.ForeColor = Color.Chocolate;
+            finres.Text = final.ToString() + " / 40";
+            Controls.Add(finres);
 
             XmlSerializer xs = new XmlSerializer(typeof(List<Discipline>));
 
