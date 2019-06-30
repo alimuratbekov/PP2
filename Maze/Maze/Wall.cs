@@ -10,12 +10,12 @@ namespace Maze
     {
         public Wall(char label) : base(label) { }
         
+        // функция отрисовки стен
         public override void Draw()
         {
 
             base.Draw();
         }
-        
         
     }
 }

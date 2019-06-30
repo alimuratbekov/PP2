@@ -10,6 +10,7 @@ namespace Maze
     {
         public Exit(char label):base(label) { }
 
+        // функция отрисовки exit
         public override void Draw()
         {
             base.Draw();

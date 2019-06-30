@@ -56,7 +56,10 @@ namespace Maze
 
             while (true)
             {
+                // процесс игры
                 state = session.play(action);
+
+                // условия завершения игры
                 if (state == GameState.LOST)
                 {
                     lost();
@@ -67,11 +70,14 @@ namespace Maze
                     win();
                     break;
                 }
+
+                // управление персонажем
                 action = KeyToGameAction(Console.ReadKey());
             }
             
         }
 
+        // при поражении
         static void lost()
         {
             Console.Clear();
@@ -81,6 +87,7 @@ namespace Maze
             Console.ReadKey();
         }
 
+        // при победе
         static void win()
         {
             Console.Clear();
