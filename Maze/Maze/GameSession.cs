@@ -56,6 +56,25 @@ namespace Maze
                 return GameState.LOST;
             }
 
+            // при столкновении с выходом загружается новый уровень
+            if (person.IsExitCollision(exit))
+            {
+                if (level == 1)
+                    level = 2;
+                else if (level == 2)
+                    level = 3;
+                else if (level == 3)
+                    level = 4;
+                else if (level == 4)
+                    return GameState.WIN;
+                // очищаются координаты прошлых объектов
+                wall.ClearLocations();
+                person.ClearLocations();
+                exit.ClearLocations();
+                // загружаются новые
+                LoadMap(level);
+            }
+
             // функция отображения стенок, выхода, персонажа
             render();
 
